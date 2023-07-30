@@ -1,0 +1,20 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore temporary files
+*.tmp
+*.log
+
+# Ignore sensitive data
+config.ini
+secrets.json
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+.venv
+
+# Ignore cache
+__pycache__/
