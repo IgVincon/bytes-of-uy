@@ -12,46 +12,48 @@ def fetch_url(url: str) -> Response:
     sleep(5)
     return response
 
-def find_elements(
+def find_element(
     response: Response, css_selector: str, first_only: bool = True
-) -> Element|list[Element]|None:
-    elements = response.html.find(css_selector, first = first_only)
-    return elements
+) -> Element|str:
+    # Si first_only = False devuelve una list[Element]? Tener en cuenta
+    element = response.html.find(css_selector, first = first_only)
+    element = 'n/a' if element is None else element
+    return element
 
-def extract_urls(elements: Element) -> list[str]: #absolute_links regresa None si no encuentra urls? Que hago en ese caso? Habria que crear un handle para eso
-    urls = elements.absolute_links
+def extract_urls(element: Element) -> list[str]:
+    # Caso limite: absolute_links no encuentra url. Regresa None? Pensar como manejarlo
+    urls = element.absolute_links
     return list(urls)
 
-def extract_data(response: Response) -> list[str|list[str]]: #revisar como poner que en vez de set[str] en realidad es tipo de dato extract_urls
-    uuid = str(uuid4())
-    title = find_elements(response, '.mec-single-title').text
-    date_time = find_elements(response, '#mec_local_time_details').text
-    place = (
-        'n/a' if find_elements(response, '.mec-single-event-location') is None
-        else find_elements(response, '.mec-single-event-location').text
-    )
-    description = find_elements(response, '.mec-single-event-description').text
-    add_to_calendar = (
-        'n/a' if find_elements(response, '.mec-export-details') is None
-        else extract_urls( find_elements(response, '.mec-export-details') )
-    )
-    data = [uuid, title, date_time, place, description, add_to_calendar]
+def extract_data(
+    response: Response, css_selectors: list[str]
+) -> list[str | list[str]]:
+    # Es posible poner con type hints tipo de dato extract_urls? Es decir, es un tipo de dato del resultado de esa función
+    element_list = [
+        find_element(response, selector) for selector in css_selectors[:-1]
+    ]
+    data = [ele.text for ele in element_list if ele is Element]
+    urls = find_element(response, css_selectors[-1])
+    urls = extract_urls(urls) if urls is Element else urls
+    data.append(urls)
     return data
 
-def scrape(urls: list[str]) -> dict[str: list[str|list[str]]]:
-    results = {
-        'uuid4': [],
-        'title': [],
-        'date_time': [],
-        'place': [],
-        'description': [],
-        'add_to_calendar': [],
-        'url': [],
-    }
+def store_data(
+    data_set_format: dict[str: list], data: list[str | list[str]], url: str
+) -> dict[ str: list[str | list[str]] ]:
+    local_copy = data_set_format
+    uuid = str(uuid4())
+    data.append(url)
+    data.append(uuid)
+    for key, value in zip(local_copy.keys(), data):
+        local_copy[key].append(value)
+    return local_copy
+
+def scrape(
+    urls: list[str], css_selectors: list[str], data_set_format: dict[str: list]
+) -> dict[ str: list[str | list[str]] ]:
     for url in urls:
         response = fetch_url(url)
-        data = extract_data(response)
-        data.append(url)
-        for key, value in zip(results.keys(), data):
-            results[key].append(value)
-    return results
+        data = extract_data(response, css_selectors)
+        data_set = store_data(data_set_format, data, url)
+    return data_set
