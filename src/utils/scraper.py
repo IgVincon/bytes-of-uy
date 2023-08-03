@@ -43,8 +43,7 @@ def find_element(
         first_only: bool = True) -> Element|str:
     # Si first_only = False devuelve una list[Element]? Tener en cuenta
     element = response.html.find(css_selector, first = first_only)
-    element = 'n/a' if element is None else element
-    return element
+    return 'n/a' if element is None else element
 
 def extract_links(element: Element) -> list[str]:
     # Caso limite: absolute_links no encuentra url. Regresa None? Pensar como manejarlo
@@ -78,5 +77,5 @@ def scrape(
         ]
         links_element = find_element(response, link_css_selector)
         data = combine_data(element_list, links_element, url)
-        data_set = store_data(data_set_format, data) #how does this even work?
+        data_set = store_data(data_set_format, data) #this may be a side effect
     return data_set
