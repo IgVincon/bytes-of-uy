@@ -1,8 +1,8 @@
 <div align="center">
 
-# **BytesOfUY**
-### :scroll: Weekly Digest :scroll:
-:woman_technologist:
+# :scroll: **BytesOfUY** :scroll:
+#### Weekly Digest
+### :woman_technologist:
 
 </div>
 
