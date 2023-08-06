@@ -1,8 +1,6 @@
 <div align="center">
 
-# :scroll: **BytesOfUY** :scroll:
-#### Weekly Digest
-### :woman_technologist:
+![alt text](imgs/banner.png "BytesOfUY banner")
 
 </div>
 
