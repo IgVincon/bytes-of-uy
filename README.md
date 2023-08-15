@@ -34,7 +34,7 @@
 
 BytesOfUY is free and open-source software licensed under the Mozilla Public License Version 2.0. You can read the license in the [LICENSE.txt] file and you can find headers on the source code files that are covered by this license.
 
-[Banner]: The original image and its copyright is property of [Sofía Meroni]. The edited image and its copyright is property of [Fabián Revetria]. The font used in the banner is [Girassol] by Liam Spradlin and its under the [Open Font License].
+[Banner]: The original image and its copyright is property of [Sofía Meroni]. Image edition was done by [Fabián Revetria]. The font used in the banner is [Girassol] by Liam Spradlin and its under the [Open Font License].
 
 
 
