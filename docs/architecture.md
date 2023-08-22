@@ -95,12 +95,9 @@ With this overview in mind it's possible to break down the complex process into 
    1. *Data Analysis* - Perform exploratory Data Analysis to identify possible visualizations (e.g. compare amount of Meetup events vs. CUTI events)
    2. *Data Visualization* - Set up automatic data visualizations to show to subscribers in digest or by another method (i.e. possible website). Consider using BI tools.
 
+### **Data Model**
+Taking into account the assumptions previously mentioned, the data would be stored in a Data Lake architecture using a Medallion architecture principle (incrementally improving the quality of data as it flows through various layers). Thus, in the first stage the raw data is stored in a semi-structured format in a JSON file, then it would be transformed and validated but still stored in semi-structured format. This validated data would be fed to the ML models for data enrichment, and by the end of the ETL process, the enriched data is loaded in a traditional relational database with the following Entity Relationship Diagram (ERD):
 
-### **Components**
-
-[To be filled]
-
-By the end of the ETL process, the enriched data is loaded in a traditional relational database with the following Entity Relationship Diagram (ERD):
 <div align="center">
 
 ```mermaid
@@ -143,4 +140,11 @@ erDiagram
 
 </div>
 
-[Justify the choice of data model and data architecture]
+### **Components**
+#### **requests-html & GraphQL**
+#### **pandas & Great Expectations (GX)**
+#### **scikit-learn**
+#### **PostgreSQL**
+#### **HTML templates & Mailchimp integration**
+#### **Airflow**
+#### **PyTest & logging**
